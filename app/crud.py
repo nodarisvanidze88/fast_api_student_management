@@ -26,7 +26,7 @@ def create_course(db: Session, course: schemas.CourseCreate, instructor_id: int)
     db.refresh(db_course)
     return db_course
 
-def get_lesssons(db: Session, course_id: int):
+def get_lessons(db: Session, course_id: int):
     return db.query(models.Lesson).filter(models.Lesson.course_id == course_id).all()
 
 def create_lesson(db: Session, lesson: schemas.LessonCreate):
