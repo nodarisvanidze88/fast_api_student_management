@@ -2,8 +2,20 @@ from sqlalchemy.orm import Session
 
 from app import models, schemas
 from .util import check_password,hash_password
+
+def login_user(db: Session, username:str, password: str):
+    user = db.query(models.User).filter(models.User.username == username).first()
+    if not user:
+        return None
+    if not check_password(password, user.hashed_password):
+        return None
+    return user
+
 def get_user(db: Session, user_id: int):
     return db.query(models.User).filter(models.User.id == user_id).first()
+
+def get_all_users(db:Session):
+    return db.query(models.User).all()
 
 def get_user_by_username(db: Session, username: str):
     return db.query(models.User).filter(models.User.username == username).first()
